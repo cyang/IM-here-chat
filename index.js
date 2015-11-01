@@ -20,7 +20,7 @@ io.on('connection', function(socket){
 
 
 	socket.on('chat message', function(msg){
-		messagesArray.push(msg);
+		messagesArray.push(usernames[socket.id]+ ": " + msg);
     	io.emit('chat message', msg, usernames[socket.id]);
   	});
 
