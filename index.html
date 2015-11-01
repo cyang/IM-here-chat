@@ -62,6 +62,11 @@
 		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 		<script>
 			var socket = io();
+
+			socket.on('A user has connected', function(){
+				$('#messages').append($('<li>').text("A user has connected"));
+			});
+
 			socket.on('A user has disconnected', function(){
 				$('#messages').append($('<li>').text("A user has disconnected"));
 			});
