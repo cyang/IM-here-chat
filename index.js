@@ -12,11 +12,10 @@ var messagesArray = [];
 var usernames = {};
 
 io.on('connection', function(socket){
-	// io.emit('A user has connected');
-
 
 	socket.on('disconnect', function(){
-		io.emit('A user has disconnected');
+		if(usernames[socket.id] != null)
+			io.emit('user disconnected', usernames[socket.id]);
 	});
 
 

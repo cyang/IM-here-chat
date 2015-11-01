@@ -96,8 +96,8 @@
 		<script>
 			var socket = io();
 
-			socket.on('A user has disconnected', function(){
-				$('#messages').append($('<li>').text("A user has disconnected"));
+			socket.on('user disconnected', function(username){
+				$('#messages').append($('<li style="font-style: italic">').text(username + " has disconnected"));
 			});
 
 			// Send message to server
@@ -108,7 +108,7 @@
 			});
 			// Retrieve message from server and display
 			socket.on('chat message', function(msg, username){
-    			$('#messages').append($('<li>').text(user + ": " + msg));
+    			$('#messages').append($('<li>').text(username + ": " + msg));
   			});
 
 			// Send username to server
@@ -125,7 +125,7 @@
 					$('#messages').append($('<li>').text(messagesArray[i]));
 				}
 
-				$('#messages').append($('<li>').text(msg + " has connected"));
+				$('#messages').append($('<li style="font-style: italic">').text(msg + " has connected"));
   			});
 
 		</script>
