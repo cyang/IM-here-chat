@@ -9,10 +9,10 @@ app.get('/', function(req, res){
 
 
 var messagesArray = [];
+var usernames = {};
 
 io.on('connection', function(socket){
 	// io.emit('A user has connected');
-
 
 
 	socket.on('disconnect', function(){
@@ -22,12 +22,13 @@ io.on('connection', function(socket){
 
 	socket.on('chat message', function(msg){
 		messagesArray.push(msg);
-    	io.emit('chat message', msg);
+    	io.emit('chat message', msg, usernames[socket.id]);
   	});
 
 	socket.on('user connected', function(msg){
+		usernames[socket.id] = msg;
+		console.log(usernames);
     	io.emit('user connected', msg, messagesArray);
-		console.log(messagesArray);
   	});
 
 });
