@@ -14,7 +14,7 @@
 				font: 13px Helvetic, Arial;
 			}
 
-			form {
+			form#m {
 				background: black;
 				padding: 3px;
 				position: fixed;
@@ -22,24 +22,49 @@
 				width: 100%;
 			}
 
-			form input {
+			form#m input {
 				border: 0;
 				padding: 10px;
 				width: 90%;
 				margin-right: .5%;
 			}
 
-			form button {
+			form#m button {
 				width: 9%;
 				background: rgb(130, 224, 255);
 				border: none;
 				padding: 10px;
 			}
 
+			form#u {
+				background: black;
+				padding: 3px;
+				position: fixed;
+				top: 100px;
+				width: 100%;
+			}
+
+			form#u input {
+				border: 0;
+				padding: 10px;
+				width: 90%;
+				margin-right: .5%;
+			}
+
+			form#u button {
+				width: 9%;
+				background: rgb(130, 224, 255);
+				border: none;
+				padding: 10px;
+			}
+
+
+
 			#messages {
 				list-style-type: none;
 				margin: 0;
 				padding: 0;
+				top: 40px;
 			}
 
 			#messages li{
@@ -53,7 +78,14 @@
 	</head>
 	<body>
 		<ul id="messages"></ul>
-		<form action="">
+
+		<form id="u" action="">
+			<input id="u" autocomplete="off" />
+			<button>Enter</button>
+			</input>
+		</form>
+
+		<form id="m" action="">
 			<input id="m" autocomplete="off" />
 			<button>Send</button>
 			</input>
@@ -62,23 +94,36 @@
 		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 		<script>
 			var socket = io();
-
-			socket.on('A user has connected', function(){
-				$('#messages').append($('<li>').text("A user has connected"));
-			});
+			$('form#m').hide();
 
 			socket.on('A user has disconnected', function(){
 				$('#messages').append($('<li>').text("A user has disconnected"));
 			});
 
-			$('form').submit(function(){
-				socket.emit('chat message', $('#m').val());
-				$('#m').val('');
+			// Send message to server
+			$('form#m').submit(function(){
+				socket.emit('chat message', $('input#m').val());
+				$('input#m').val('');
 				return false;
 			});
+			// Retrieve message from server and display
 			socket.on('chat message', function(msg){
     			$('#messages').append($('<li>').text(msg));
   			});
+
+			// Send username to server
+			$('form#u').submit(function(){
+				socket.emit('user connected', $('input#u').val());
+				$('input#u').val('');
+				$(this).hide()
+				return false;
+			});
+			// Retrieve username from server and display
+			socket.on('user connected', function(msg){
+    			$('#messages').append($('<li>').text(msg + " has connected"));
+				$('form#m').show();
+  			});
+
 		</script>
 	</body>
 
