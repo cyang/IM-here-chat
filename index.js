@@ -7,8 +7,13 @@ app.get('/', function(req, res){
 	res.sendFile(__dirname + '/index.html');
 });
 
+
+var messagesArray = [];
+
 io.on('connection', function(socket){
 	// io.emit('A user has connected');
+
+
 
 	socket.on('disconnect', function(){
 		io.emit('A user has disconnected');
@@ -16,11 +21,13 @@ io.on('connection', function(socket){
 
 
 	socket.on('chat message', function(msg){
+		messagesArray.push(msg);
     	io.emit('chat message', msg);
   	});
 
 	socket.on('user connected', function(msg){
-    	io.emit('user connected', msg);
+    	io.emit('user connected', msg, messagesArray);
+		console.log(messagesArray);
   	});
 
 });
