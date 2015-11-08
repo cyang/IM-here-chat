@@ -40,7 +40,6 @@
 			    border: 0;
 			    padding: 10px;
 			    width: 90%;
-			    margin-right: .5%;
 			}
 
 			form#message button {
@@ -48,28 +47,29 @@
 			    background: rgb(130, 224, 255);
 			    border: none;
 			    padding: 10px;
+				border-radius: 8px;
 			}
 
 			form#user {
-			    background: black;
 			    padding: 3px;
 				position: relative;
 				margin-left: auto;
 				margin-right: auto;
-				margin-top: 260px;
-			    width: 20%;
+				margin-top: 25%;
+			    width: 50%;
 			}
 
 			form#user input {
-			    border: 0;
 			    padding: 10px;
-			    width: 79%;
-			    margin-right: .5%;
+			    width: 78%;
 			}
 
 			form#user button {
+				width: 18.5%;
 			    background-color: #A1EFB4;
-			    border: none;
+				border-style: outset;
+				border-width: 0;
+				border-radius: 8px;
 			    padding: 10px;
 			}
 
@@ -103,13 +103,13 @@
 			<ul id="messages"></ul>
 		</div>
 		<form id="user" action="">
-			<input id="user" autocomplete="off" />
+			<input id="user" placeholder="Enter a username" autocomplete="off" />
 			<button>Enter</button>
 			</input>
 		</form>
 
 		<form id="message" action="">
-			<input id="message" autocomplete="off" />
+			<input id="message" placeholder="Type a message..."autocomplete="off" />
 			<button>Send</button>
 			</input>
 		</form>
@@ -118,16 +118,19 @@
 		<script>
 			var socket = io();
 
+			$("#user input").focus();
+
 			socket.on('user disconnected', function(username){
 				$('#messages').append($('<li style="font-style: italic">').text(username + " has disconnected"));
 			});
 
 			// Send message to server
 			$('form#message').submit(function(){
+				if ($('input#message').val() != ""){
 
-				socket.emit('chat message', $('input#message').val());
-				$('input#message').val('');
-
+					socket.emit('chat message', $('input#message').val());
+					$('input#message').val('');
+				}
 				return false;
 			});
 			// Retrieve message from server and display
@@ -139,10 +142,12 @@
 
 			// Send username to server
 			$('form#user').submit(function(){
-				socket.emit('user connected', $('input#user').val());
-				$('input#user').val('');
-				$(this).hide();
-				$(this).next().show();
+				if ($('input#user').val() != ""){
+					socket.emit('user connected', $('input#user').val());
+					$('input#user').val('');
+					$(this).hide();
+					$(this).next().show();
+				}
 				return false;
 			});
 
