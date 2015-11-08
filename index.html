@@ -3,85 +3,93 @@
 	<head>
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="css/main.css" type="text/css">
 		<title>IM Here Chat</title>
-
 		<style>
 			* {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
+			    margin: 0;
+			    padding: 0;
+			    box-sizing: border-box;
 			}
 
 			body {
-				font: 13px Helvetic, Arial;
+			    font: 13px Helvetic, Arial;
 			}
 
 			form#message {
-				display: none;
-				background: black;
-				padding: 3px;
-				position: fixed;
-				bottom: 0;
-				width: 100%;
+			    display: none;
+			    background: black;
+			    padding: 3px;
+			    position: fixed;
+			    bottom: 0;
+			    width: 100%;
 			}
 
 			form#message input {
-				border: 0;
-				padding: 10px;
-				width: 90%;
-				margin-right: .5%;
+			    border: 0;
+			    padding: 10px;
+			    width: 90%;
+			    margin-right: .5%;
 			}
 
 			form#message button {
-				width: 9%;
-				background: rgb(130, 224, 255);
-				border: none;
-				padding: 10px;
+			    width: 9%;
+			    background: rgb(130, 224, 255);
+			    border: none;
+			    padding: 10px;
 			}
 
 			form#user {
-				background: black;
-				padding: 3px;
-				position: fixed;
-				top: 100px;
-				width: 100%;
+			    background: black;
+			    padding: 3px;
+			    position: fixed;
+			    top: 100px;
+			    width: 100%;
 			}
 
 			form#user input {
-				border: 0;
-				padding: 10px;
-				width: 90%;
-				margin-right: .5%;
+			    border: 0;
+			    padding: 10px;
+			    width: 90%;
+			    margin-right: .5%;
 			}
 
 			form#user button {
-				width: 9%;
-				background: rgb(130, 224, 255);
-				border: none;
-				padding: 10px;
+			    width: 9%;
+			    background: rgb(130, 224, 255);
+			    border: none;
+			    padding: 10px;
 			}
 
-
+			#messagesDiv {
+				position:absolute;
+				top:0;
+				left:0;
+				bottom:0;
+				right:0;
+				margin-bottom: 40px;
+				overflow: scroll;
+			}
 
 			#messages {
 				list-style-type: none;
-				margin: 0;
-				padding: 0;
-				top: 40px;
 			}
 
 			#messages li{
-				padding: 5px 10px;
+			    padding: 5px 10px;
 			}
 
 			#messages li:nth-child(odd) {
-				background: #eee;
+			    background: #eee;
 			}
+
 		</style>
+
 	</head>
 	<body>
-		<ul id="messages"></ul>
-
+		<div id="messagesDiv">
+			<ul id="messages"></ul>
+		</div>
 		<form id="user" action="">
 			<input id="user" autocomplete="off" />
 			<button>Enter</button>
@@ -104,8 +112,10 @@
 
 			// Send message to server
 			$('form#message').submit(function(){
+
 				socket.emit('chat message', $('input#message').val());
 				$('input#message').val('');
+
 				return false;
 			});
 			// Retrieve message from server and display
