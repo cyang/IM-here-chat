@@ -151,6 +151,8 @@
 				}
 
 				$('#messages').append($('<li style="font-style: italic">').text(msg + " has connected"));
+				var objDiv = document.getElementById("messagesDiv");
+				objDiv.scrollTop = objDiv.scrollHeight;
   			});
 
 		</script>
