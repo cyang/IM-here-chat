@@ -53,21 +53,22 @@
 			form#user {
 			    background: black;
 			    padding: 3px;
-			    position: fixed;
-			    top: 100px;
-			    width: 100%;
+				position: relative;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 260px;
+			    width: 20%;
 			}
 
 			form#user input {
 			    border: 0;
 			    padding: 10px;
-			    width: 90%;
+			    width: 79%;
 			    margin-right: .5%;
 			}
 
 			form#user button {
-			    width: 9%;
-			    background: rgb(130, 224, 255);
+			    background-color: #A1EFB4;
 			    border: none;
 			    padding: 10px;
 			}
@@ -144,6 +145,7 @@
 				$(this).next().show();
 				return false;
 			});
+
 			// Retrieve username from server and display
 			socket.on('user connected', function(msg, messagesArray){
 				for (var i = 0; i < messagesArray.length; i++) {

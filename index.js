@@ -26,7 +26,6 @@ io.on('connection', function(socket){
 
 	socket.on('user connected', function(msg){
 		usernames[socket.id] = msg;
-		console.log(usernames);
     	io.emit('user connected', msg, messagesArray);
   	});
 
