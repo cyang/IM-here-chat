@@ -132,6 +132,8 @@
 			// Retrieve message from server and display
 			socket.on('chat message', function(msg, username){
     			$('#messages').append($('<li>').text(username + ": " + msg));
+				var objDiv = document.getElementById("messagesDiv");
+				objDiv.scrollTop = objDiv.scrollHeight;
   			});
 
 			// Send username to server
